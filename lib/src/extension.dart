@@ -101,6 +101,10 @@ abstract class ExtensionValue {
           return AuthorityInformationAccess.fromAsn1(obj as ASN1Sequence);
       }
     }
+    if  (id.name == 'id-isismtt-at-admission') {
+      return AdmissionExtension.fromAsn1(obj as ASN1Sequence);
+    }
+
     throw UnimplementedError(
         'Cannot handle $id (${id.parent} ${id.nodes.last})');
   }
@@ -682,4 +686,35 @@ class GeneralNames extends ExtensionValue {
       return GeneralName.fromAsn1(n);
     }).toList());
   }
+}
+
+class AdmissionExtension extends ExtensionValue {
+  GeneralName? admissionauthority;
+  late List<Admissions> admissions;
+
+  AdmissionExtension(this.admissionauthority, this.admissions);
+
+  AdmissionExtension.fromAsn1(ASN1Sequence sequence) {
+    if (sequence.elements.length > 1) {
+      admissionauthority = GeneralName.fromAsn1(sequence.elements.removeAt(0));
+    }
+    admissions = [for (var adm in sequence.elements) Admissions.fromAsn1(adm as ASN1Sequence)];
+  }
+
+}
+
+
+///Syntax: http://git.bouncycastle.org/docs/utildocs1.5on/org/bouncycastle/asn1/isismtt/x509/Admissions.html
+class Admissions extends ExtensionValue {
+  GeneralName? adminssionAuthority;
+  NamingAuthority? namingAuthority;
+  late List professionInfos;
+  Admissions.fromAsn1(ASN1Sequence sequence) {
+    professionInfos = List.empty();
+  }
+  //TODO: implement Admissions
+}
+
+class NamingAuthority extends ExtensionValue {
+  //TODO: implement NamingAuthority
 }

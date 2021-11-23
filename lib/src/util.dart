@@ -72,6 +72,7 @@ Identifier _curveObjectIdentifierToIdentifier(ObjectIdentifier id) {
     'prime256v1': curves.p256,
     'secp384r1': curves.p384,
     'secp521r1': curves.p521,
+    'brainpoolP256r1': curves.bp256r1
   }[id.name];
   if (curve == null) {
     throw UnsupportedError('Curves of type ${id} not supported');

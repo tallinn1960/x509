@@ -263,4 +263,11 @@ void main() {
       }
     });
   });
+
+  group('brainpool', () {
+    test('read a x-509 certificate with a brainpool key', () {
+      var cert = parsePem(File('test/resources/ECC Brainpool Signer.pem').readAsStringSync());
+      expect(cert, isNotNull);
+    });
+  });
 }

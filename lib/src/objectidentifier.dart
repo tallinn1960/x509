@@ -122,6 +122,13 @@ class ObjectIdentifier {
                 6: 'prime239v3',
                 7: 'prime256v1',
               }
+            },
+            4: {
+              null: 'signatures',
+              3: {
+                null: 'ecdsa-with-SHA2',
+                2: 'ecdsa-with-SHA256'
+              }
             }
           },
           113549: {
@@ -214,6 +221,21 @@ class ObjectIdentifier {
               }
             }
           }
+        },
+        276: {
+          null: 'de',
+          0: {
+            null: 'din-certco',
+            76: {
+              null: 'gesundheitswesen',
+              4: {
+                null: 'idenfizierungsmechanismen',
+                163: 'policy-gem-010200-or-cp',
+                203: 'fd-sig'
+              }
+            }
+          }
+
         }
       },
       3: {
@@ -334,11 +356,77 @@ class ObjectIdentifier {
           null: 'teletrust',
           3: {
             null: 'algorithm',
+            1: {
+              null: 'encryptionAlgorithm',
+              1: {
+                null: 'des',
+                1: {
+                  null: 'desECB',
+                  1: {
+                    null: 'desECB-pad',
+                    1: '1'
+                  }
+                }
+              },
+              2: {
+                null: '2',
+                1: {
+                  null: '1',
+                  1: {
+                    null: '1',
+                    1: '1',
+                  }
+                },
+                2: {
+                  null: '2',
+                  1: {
+                    null: '1',
+                    1: '1'
+                  }
+                },
+                3: '3',
+                4: '4'
+              },
+              3: {
+                null: 'des-3',
+                1: {
+                  null: '1',
+                  1: {
+                    null: '1',
+                    1: '1'
+                  }
+                },
+                2: {
+                  1: {
+                    null: '1',
+                    1: '1'
+                  }
+                }
+              },
+              4: {
+                null: 'rsaEncryption',
+                512: {
+                  null: '512',
+                  17: 'rsaEncryptionWithImod512lexp17'
+                }
+              },
+              5: {
+                null: '5',
+                1: '1',
+                2: {
+                  null: '2',
+                  1: '1',
+                }
+
+              }
+            },
             2: {
               null: 'hashAlgorithm',
               1: 'ripemd160',
               2: 'ripemd128',
-              3: 'ripemd256'
+              3: 'ripemd256',
+              4: 'mdc2slh',
+              5: 'mdc2dlh'
             },
             3: {
               null: 'signatureAlgorithm',
@@ -347,7 +435,238 @@ class ObjectIdentifier {
                 2: 'rsaSignatureWithripemd160',
                 3: 'rsaSignatureWithripemd128',
                 4: 'rsaSignatureWithripemd256'
+              },
+              2: {
+                null: 'ecSign',
+                1: 'ecSignWithsha1',
+                2: 'ecSignWithripemd160',
+                3: 'ecSignWithmd2',
+                4: 'ecSignWithmd5',
+                5: {
+                  null: 'ttt-ecg',
+                  1: {
+                    null: 'fieldType',
+                    1: {
+                      null: 'characteristictwoField',
+                      1: {
+                        null: 'basisType',
+                        1: 'ipBasis'
+                      }
+                    }
+                  },
+                  2: {
+                    null: 'keyType',
+                    1: 'ecgPublicKey'
+                  },
+                  3: 'curve',
+                  4: {
+                    null: 'signatures',
+                    1: 'ecgdsa-with-RIPEMD160',
+                    2: 'ecgdsa-with-SHA1',
+                    3: 'ecgdsa-with-SHA224',
+                    4: 'ecgdsa-with-SHA256',
+                    5: 'ecgdsa-with-SHA384',
+                    6: 'ecgdsa-with-SHA512'
+                  },
+                  5: {
+                    null: 'module',
+                    1: '1',
+                  }
+                },
+                8: {
+                  null: 'ecStdCurvesAndGeneration',
+                  1: {
+                    null: 'ellipticCurve',
+                    1: {
+                      null: 'versionOne',
+                      1: 'brainpoolP160r1',
+                      2: 'brainpoolP160t1',
+                      3: 'brainpoolP192r1',
+                      4: 'brainpoolP192t1',
+                      5: 'brainpoolP224r1',
+                      6: 'brainpoolP224t1',
+                      7: 'brainpoolP256r1',
+                      8: 'brainpoolP256t1',
+                      9: 'brainpoolP320r1',
+                      10: 'brainpoolP320t1',
+                      11: 'brainpoolP384r1',
+                      12: 'brainpoolP384t1',
+                      13: 'brainpoolP512r1',
+                      14: 'brainpoolP512t1'
+                    }
+                  }
+                }
               }
+            },
+            4: {
+              null: 'signatureScheme',
+              1: {
+                null: 'sigS-ISO9796-1',
+                1: 'sigS-ISO9796-1-DFU'
+              },
+              2: {
+                null: 'sigS-ISO9796-2',
+                1: 'sigS-IOS9796-2Withred',
+                2: {
+                  null: 'sigS-ISO9796-2Withrsa',
+                  1: 'sigS-ISO9796-2Withsha1',
+                  2: 'sigS-ISO9796-2Withripemd160'
+                },
+                3: '3'
+              },
+              3: {
+                null: 'sigS-ISO9796-2rnd',
+                1: 'sigS-ISO9796-2rndWithrsa-even-exp',
+                2: {
+                  null: 'sigS-ISO9796-2rndWithrsa',
+                  1: 'sigS-ISO9796-2rndWithsha1',
+                  2: 'sigS-ISO9796-2rndWithripemd160',
+                  3: 'sigS-ISO9796-2rndWithsha224',
+                  4: 'igS-ISO9796-2rndWithsha256'
+                }
+
+
+              }
+            },
+            5: {
+              null: '5',
+              1: {
+                null: 'authS-ISO9796-1',
+                1: 'authS-ISO9796-1-DFU'
+              },
+              2: {
+                null: 'authS-ISO9796-2',
+                1: 'authS-ISO9796-2Withrsa-even-exponent',
+                2: {
+                  null: 'authS-ISO9796-2Withrsa',
+                  1: 'uthS-ISO9796-2Withsha1'
+                },
+                3: 'authS-ISO9796-2Withrsa-mutual'
+              },
+              3: {
+                null: 'authS-gemSpec-COS-G2',
+                1: 'authS-gemSpec-COS-G2-ecc-withsha256'
+              }
+            }
+          },
+          4: 'attribute',
+          5: {
+            null: 'policy',
+            1: 'nici-pki',
+            2: {
+              null: 'gematik-policies',
+              1: 'gematik-policy-AUT-ENC-OSIG'
+            }
+
+          },
+          8: {
+            null: 'common-pki',
+            1: {
+              null: 'id-commonpki-cp',
+              1: '1'
+            },
+            2: {
+              null: 'id-commonpki-kp',
+              1: '1'
+            },
+            3: {
+              null: 'id-commonpki-at',
+              1: '1',
+              2: '2',
+              3: 'id-isismtt-at-admission',
+              4: '4',
+              5: '5',
+              6: '6',
+              7: '7',
+              8: '8',
+              9: 'id-isismtt-at-retrieveIfAllowed',
+              10: 'id-isismtt-at-requestedCertificate',
+              11: {
+                null: 'id-common-pki-namingAuthorities',
+                1: {
+                  null: '1',
+                  1: '1',
+                  2: '2',
+                  3: '3',
+                  4: '4',
+                  5: '5',
+                  6: '6',
+                  7: '7',
+                  8: '8',
+                  9: '9',
+                  10: '10',
+                  11: '11',
+                  12: '12',
+                  13: '13',
+                  14: '14',
+                  15: '15',
+                  16: '16',
+                  17: '17',
+                  18: '18',
+                  19: '19'
+                }
+              },
+              12: 'id-isismtt-at-CertInDirSince',
+              13: 'id-isismtt-at-certHash',
+              14: '14',
+              15: '15'
+            },
+            4: {
+              null: 'id-commonpki-on',
+              1: '1',
+              8: '8'
+            },
+            6: {
+              null: '6',
+              1: '1',
+              2: '2',
+              3: '3',
+              4: '4',
+              5: '5',
+              6: '6',
+              7: '7',
+              8: '8',
+              9: '9',
+              10: '10'
+            }
+          },
+          15: {
+            null: '15',
+            2: {
+              null: 'gematik',
+              1: {
+                null: 'policy',
+                1: 'sm-k',
+                2: 'sm-kt',
+                3: 'sm-sud',
+                4: 'testbetrieb'
+              },
+              2: {
+                null: 'admission',
+                1: {
+                  null: 'role',
+                  1: 'apotheker',
+                  2: 'arzt',
+                  3: 'psychotherapeut',
+                  4: 'Zahnarzt'
+                },
+              },
+              3: {
+                null: 'organisation',
+                0: 'tst',
+                1: {
+                  null: 'le',
+                  0: 'testorganisation',
+                  1: 'apotheke',
+                  2: 'arztpraxis',
+                  3: 'krankenhaus',
+                  4: 'psychotherapeutenpraxis',
+                  5: 'zahnarztpraxis'
+                },
+                2: 'sle',
+                3: 'kt'
+              }
+
             }
           }
         },
@@ -398,6 +717,10 @@ class ObjectIdentifier {
           null: 'at',
           3: 'commonName',
           4: 'surname',
+          5: {
+            null: 'serialNumber',
+            2: 'encryptedSerialNumber'
+          },
           6: 'countryName',
           7: 'localityName',
           8: 'stateOrProvinceName',
@@ -490,7 +813,7 @@ class ObjectIdentifier {
             31: '31'
           }
         }
-      }
+      },
     }
   };
 }
