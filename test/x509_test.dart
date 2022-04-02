@@ -1,10 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:asn1lib/asn1lib.dart';
 import 'package:test/test.dart';
 import 'package:x509/x509.dart';
-import 'dart:io';
-import 'package:asn1lib/asn1lib.dart';
 
 void main() {
   group('rsa', () {
@@ -96,7 +96,7 @@ void main() {
           BigInt.parse(
               '5341829702302574813496892344628933729576493483297373613204193688404465422472930583369539336694834830511678939023627363969939187661870508700291259319376559490'));
     });
-    test('parse ec 256 key pair', () {
+    test('parse ec 256 key pair', () async {
       var pem = File('test/files/ec256.key').readAsStringSync();
 
       KeyPair keyPair = parsePem(pem).single;
@@ -108,7 +108,7 @@ void main() {
       expect(publicKey.curve, curves.p256);
       expect(publicKey.xCoordinate, isNotNull);
       expect(publicKey.yCoordinate, isNotNull);
-      var signature = privateKey
+      var signature = await privateKey
           .createSigner(algorithms.signing.ecdsa.sha256)
           .sign('hello world'.codeUnits);
 
@@ -118,7 +118,7 @@ void main() {
 
       expect(verified, isTrue);
     });
-    test('parse ec 256k key pair', () {
+    test('parse ec 256k key pair', () async {
       var pem = File('test/files/ec256k.key').readAsStringSync();
 
       KeyPair keyPair = parsePem(pem).single;
@@ -130,7 +130,7 @@ void main() {
       expect(publicKey.curve, curves.p256k);
       expect(publicKey.xCoordinate, isNotNull);
       expect(publicKey.yCoordinate, isNotNull);
-      var signature = privateKey
+      var signature = await privateKey
           .createSigner(algorithms.signing.ecdsa.sha256)
           .sign('hello world'.codeUnits);
 
@@ -140,7 +140,7 @@ void main() {
 
       expect(verified, isTrue);
     });
-    test('parse ec 384 key pair', () {
+    test('parse ec 384 key pair', () async {
       var pem = File('test/files/ec384.key').readAsStringSync();
 
       KeyPair keyPair = parsePem(pem).single;
@@ -152,7 +152,7 @@ void main() {
       expect(publicKey.curve, curves.p384);
       expect(publicKey.xCoordinate, isNotNull);
       expect(publicKey.yCoordinate, isNotNull);
-      var signature = privateKey
+      var signature = await privateKey
           .createSigner(algorithms.signing.ecdsa.sha384)
           .sign('hello world'.codeUnits);
 
@@ -266,7 +266,8 @@ void main() {
 
   group('brainpool', () {
     test('read a x-509 certificate with a brainpool key', () {
-      var cert = parsePem(File('test/resources/ECC Brainpool Signer.pem').readAsStringSync());
+      var cert = parsePem(
+          File('test/resources/ECC Brainpool Signer.pem').readAsStringSync());
       expect(cert, isNotNull);
     });
   });
