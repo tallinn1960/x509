@@ -10,7 +10,7 @@ class ObjectIdentifier {
       : null;
 
   factory ObjectIdentifier.fromAsn1(ASN1ObjectIdentifier id) {
-    var bytes = id.valueBytes();
+/*    var bytes = id.valueBytes();
     var nodes = <int>[];
     var v = bytes.first;
     nodes.add(v ~/ 40);
@@ -26,16 +26,16 @@ class ObjectIdentifier {
         nodes.add(w);
         w = 0;
       }
-    }
+    }*/
 
-    return ObjectIdentifier(nodes);
+    return ObjectIdentifier(id.oi);
   }
 
   ASN1ObjectIdentifier toAsn1() {
-    var bytes = <int>[];
+/*    var bytes = <int>[];
     bytes.add(nodes.first * 40 + nodes[1]);
     for (var v in nodes.skip(2)) {
-      var w = [];
+      var w = <int>[];
       while (v > 128) {
         var u = v % 128;
         v -= u;
@@ -45,8 +45,10 @@ class ObjectIdentifier {
       w.add(v);
       bytes.addAll(w.skip(1).toList().reversed.map((v) => v + 128));
       bytes.add(w.first);
-    }
-    return ASN1ObjectIdentifier(bytes as List<int>);
+    }*/
+    final asn1 = ASN1ObjectIdentifier(nodes);
+    // asn1.encodedBytes; // enforce encoding
+    return asn1;
   }
 
   @override
@@ -125,10 +127,7 @@ class ObjectIdentifier {
             },
             4: {
               null: 'signatures',
-              3: {
-                null: 'ecdsa-with-SHA2',
-                2: 'ecdsa-with-SHA256'
-              }
+              3: {null: 'ecdsa-with-SHA2', 2: 'ecdsa-with-SHA256'}
             }
           },
           113549: {
@@ -235,7 +234,6 @@ class ObjectIdentifier {
               }
             }
           }
-
         }
       },
       3: {
@@ -362,10 +360,7 @@ class ObjectIdentifier {
                 null: 'des',
                 1: {
                   null: 'desECB',
-                  1: {
-                    null: 'desECB-pad',
-                    1: '1'
-                  }
+                  1: {null: 'desECB-pad', 1: '1'}
                 }
               },
               2: {
@@ -379,10 +374,7 @@ class ObjectIdentifier {
                 },
                 2: {
                   null: '2',
-                  1: {
-                    null: '1',
-                    1: '1'
-                  }
+                  1: {null: '1', 1: '1'}
                 },
                 3: '3',
                 4: '4'
@@ -391,24 +383,15 @@ class ObjectIdentifier {
                 null: 'des-3',
                 1: {
                   null: '1',
-                  1: {
-                    null: '1',
-                    1: '1'
-                  }
+                  1: {null: '1', 1: '1'}
                 },
                 2: {
-                  1: {
-                    null: '1',
-                    1: '1'
-                  }
+                  1: {null: '1', 1: '1'}
                 }
               },
               4: {
                 null: 'rsaEncryption',
-                512: {
-                  null: '512',
-                  17: 'rsaEncryptionWithImod512lexp17'
-                }
+                512: {null: '512', 17: 'rsaEncryptionWithImod512lexp17'}
               },
               5: {
                 null: '5',
@@ -417,7 +400,6 @@ class ObjectIdentifier {
                   null: '2',
                   1: '1',
                 }
-
               }
             },
             2: {
@@ -448,16 +430,10 @@ class ObjectIdentifier {
                     null: 'fieldType',
                     1: {
                       null: 'characteristictwoField',
-                      1: {
-                        null: 'basisType',
-                        1: 'ipBasis'
-                      }
+                      1: {null: 'basisType', 1: 'ipBasis'}
                     }
                   },
-                  2: {
-                    null: 'keyType',
-                    1: 'ecgPublicKey'
-                  },
+                  2: {null: 'keyType', 1: 'ecgPublicKey'},
                   3: 'curve',
                   4: {
                     null: 'signatures',
@@ -500,10 +476,7 @@ class ObjectIdentifier {
             },
             4: {
               null: 'signatureScheme',
-              1: {
-                null: 'sigS-ISO9796-1',
-                1: 'sigS-ISO9796-1-DFU'
-              },
+              1: {null: 'sigS-ISO9796-1', 1: 'sigS-ISO9796-1-DFU'},
               2: {
                 null: 'sigS-ISO9796-2',
                 1: 'sigS-IOS9796-2Withred',
@@ -524,16 +497,11 @@ class ObjectIdentifier {
                   3: 'sigS-ISO9796-2rndWithsha224',
                   4: 'igS-ISO9796-2rndWithsha256'
                 }
-
-
               }
             },
             5: {
               null: '5',
-              1: {
-                null: 'authS-ISO9796-1',
-                1: 'authS-ISO9796-1-DFU'
-              },
+              1: {null: 'authS-ISO9796-1', 1: 'authS-ISO9796-1-DFU'},
               2: {
                 null: 'authS-ISO9796-2',
                 1: 'authS-ISO9796-2Withrsa-even-exponent',
@@ -553,22 +521,12 @@ class ObjectIdentifier {
           5: {
             null: 'policy',
             1: 'nici-pki',
-            2: {
-              null: 'gematik-policies',
-              1: 'gematik-policy-AUT-ENC-OSIG'
-            }
-
+            2: {null: 'gematik-policies', 1: 'gematik-policy-AUT-ENC-OSIG'}
           },
           8: {
             null: 'common-pki',
-            1: {
-              null: 'id-commonpki-cp',
-              1: '1'
-            },
-            2: {
-              null: 'id-commonpki-kp',
-              1: '1'
-            },
+            1: {null: 'id-commonpki-cp', 1: '1'},
+            2: {null: 'id-commonpki-kp', 1: '1'},
             3: {
               null: 'id-commonpki-at',
               1: '1',
@@ -611,11 +569,7 @@ class ObjectIdentifier {
               14: '14',
               15: '15'
             },
-            4: {
-              null: 'id-commonpki-on',
-              1: '1',
-              8: '8'
-            },
+            4: {null: 'id-commonpki-on', 1: '1', 8: '8'},
             6: {
               null: '6',
               1: '1',
@@ -666,7 +620,6 @@ class ObjectIdentifier {
                 2: 'sle',
                 3: 'kt'
               }
-
             }
           }
         },
@@ -717,10 +670,7 @@ class ObjectIdentifier {
           null: 'at',
           3: 'commonName',
           4: 'surname',
-          5: {
-            null: 'serialNumber',
-            2: 'encryptedSerialNumber'
-          },
+          5: {null: 'serialNumber', 2: 'encryptedSerialNumber'},
           6: 'countryName',
           7: 'localityName',
           8: 'stateOrProvinceName',

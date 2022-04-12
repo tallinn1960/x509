@@ -112,7 +112,7 @@ void main() {
           .createSigner(algorithms.signing.ecdsa.sha256)
           .sign('hello world'.codeUnits);
 
-      var verified = publicKey
+      var verified = await publicKey
           .createVerifier(algorithms.signing.ecdsa.sha256)
           .verify(Uint8List.fromList('hello world'.codeUnits), signature);
 
@@ -134,7 +134,7 @@ void main() {
           .createSigner(algorithms.signing.ecdsa.sha256)
           .sign('hello world'.codeUnits);
 
-      var verified = publicKey
+      var verified = await publicKey
           .createVerifier(algorithms.signing.ecdsa.sha256)
           .verify(Uint8List.fromList('hello world'.codeUnits), signature);
 
@@ -156,7 +156,7 @@ void main() {
           .createSigner(algorithms.signing.ecdsa.sha384)
           .sign('hello world'.codeUnits);
 
-      var verified = publicKey
+      var verified = await publicKey
           .createVerifier(algorithms.signing.ecdsa.sha384)
           .verify(Uint8List.fromList('hello world'.codeUnits), signature);
 
@@ -189,6 +189,24 @@ void main() {
           ASN1Parser(bytes).nextObject() as ASN1Sequence);
       expect(c, isA<X509Certificate>());
     });
+
+    test('der decode and encode', () {
+      final f = File('test/resources/egk-idp-idnumber-b-valid-ecc.pem');
+      final file_objects = parsePem(f.readAsStringSync());
+      file_objects.forEach((element) {
+        if (element is X509Certificate) {
+          final cert = element as X509Certificate;
+          final algorithm = cert.signatureAlgorithm.algorithm.toAsn1();
+          final algorithm2 = ObjectIdentifier.fromAsn1(algorithm);
+          final asn1 = cert.toAsn1();
+          final cert2 = X509Certificate.fromAsn1(asn1);
+          expect(cert.tbsCertificate.version, cert2.tbsCertificate.version);
+          expect(cert.tbsCertificate.serialNumber,
+              cert2.tbsCertificate.serialNumber);
+          expect(cert.tbsCertificate.subject, cert2.tbsCertificate.subject);
+        }
+      });
+    }, skip: true);
   });
 
   group('v3 extension', () {
