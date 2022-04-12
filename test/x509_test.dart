@@ -265,10 +265,34 @@ void main() {
   });
 
   group('brainpool', () {
-    test('read a x-509 certificate with a brainpool key', () {
-      var cert = parsePem(
-          File('test/resources/ECC Brainpool Signer.pem').readAsStringSync());
+    test('read a private brainpool key', () {
+      var cert = parsePem(File('test/resources/ECC Brainpool Signer.pem')
+              .readAsStringSync())
+          .first;
       expect(cert, isNotNull);
+      expect(cert is PrivateKeyInfo, true);
+      var v = cert as PrivateKeyInfo;
+      expect(v.keyPair.publicKey is EcPublicKey, true);
+      expect(v.keyPair.privateKey is EcPrivateKey, true);
+      var pk = v.keyPair.publicKey as EcPublicKey;
+      expect(pk.curve.name, 'curve/BP-256r1');
+      var ppk = v.keyPair.privateKey as EcPrivateKey;
+      expect(ppk.curve.name, 'curve/BP-256r1');
+    });
+    test('read a private brainpool key 2', () {
+      var cert = parsePem(
+              File('test/resources/egk-idp-idnumber-b-valid-ecc.pem')
+                  .readAsStringSync())
+          .first;
+      expect(cert, isNotNull);
+      expect(cert is PrivateKeyInfo, true);
+      var v = cert as PrivateKeyInfo;
+      expect(v.keyPair.publicKey is EcPublicKey, true);
+      expect(v.keyPair.privateKey is EcPrivateKey, true);
+      var pk = v.keyPair.publicKey as EcPublicKey;
+      expect(pk.curve.name, 'curve/BP-256r1');
+      var ppk = v.keyPair.privateKey as EcPrivateKey;
+      expect(ppk.curve.name, 'curve/BP-256r1');
     });
   });
 }

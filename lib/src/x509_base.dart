@@ -3,17 +3,18 @@
 
 library x509;
 
+import 'dart:convert';
 import 'dart:developer';
+import 'dart:typed_data';
 
 import 'package:asn1lib/asn1lib.dart';
-import 'dart:convert';
-import 'package:quiver/core.dart';
-import 'package:quiver/collection.dart';
-import 'dart:typed_data';
 import 'package:crypto_keys/crypto_keys.dart';
-export 'package:crypto_keys/crypto_keys.dart';
+import 'package:quiver/collection.dart';
+import 'package:quiver/core.dart';
 
 import 'util.dart';
+
+export 'package:crypto_keys/crypto_keys.dart';
 
 part 'certificate.dart';
 part 'extension.dart';
@@ -54,7 +55,9 @@ class Name {
     names.forEach((n) {
       var set = ASN1Set();
       n.forEach((k, v) {
-        set.add(ASN1Sequence()..add(fromDart(k))..add(fromDart(v)));
+        set.add(ASN1Sequence()
+          ..add(fromDart(k))
+          ..add(fromDart(v)));
       });
       seq.add(set);
     });
@@ -78,7 +81,9 @@ class Validity {
       );
 
   ASN1Sequence toAsn1() {
-    return ASN1Sequence()..add(fromDart(notBefore))..add(fromDart(notAfter));
+    return ASN1Sequence()
+      ..add(fromDart(notBefore))
+      ..add(fromDart(notAfter));
   }
 
   @override
@@ -171,7 +176,8 @@ class PrivateKeyInfo {
         keyPairFromAsn1(
             ASN1BitString(
                 (sequence.elements[2] as ASN1OctetString).contentBytes()!),
-            algorithm.algorithm));
+            algorithm.algorithm,
+            parameters: algorithm.parameters));
   }
 }
 

@@ -24,7 +24,8 @@ ObjectIdentifier? _ecParametersFromAsn1(ASN1Object object) {
   return null;
 }
 
-KeyPair ecKeyPairFromAsn1(ASN1Sequence sequence) {
+KeyPair ecKeyPairFromAsn1(ASN1Sequence sequence,
+    {ObjectIdentifier? algorithm}) {
   // https://tools.ietf.org/html/rfc5915
   //   ECPrivateKey ::= SEQUENCE {
   //     version        INTEGER { ecPrivkeyVer1(1) } (ecPrivkeyVer1),
@@ -49,6 +50,7 @@ KeyPair ecKeyPairFromAsn1(ASN1Sequence sequence) {
     curve = _curveObjectIdentifierToIdentifier(_ecParametersFromAsn1(e)!);
     i++;
   }
+  if (algorithm != null) curve = _curveObjectIdentifierToIdentifier(algorithm);
   curve ??= _lengthToCurve(l);
 
   var publicKey;
@@ -136,7 +138,8 @@ EcPublicKey ecPublicKeyFromAsn1(ASN1BitString bitString, {Identifier? curve}) {
   }
 }
 
-KeyPair keyPairFromAsn1(ASN1BitString data, ObjectIdentifier algorithm) {
+KeyPair keyPairFromAsn1(ASN1BitString data, ObjectIdentifier algorithm,
+    {ObjectIdentifier? parameters}) {
   switch (algorithm.name) {
     case 'rsaEncryption':
       var sequence =
@@ -145,7 +148,7 @@ KeyPair keyPairFromAsn1(ASN1BitString data, ObjectIdentifier algorithm) {
     case 'ecPublicKey':
       var sequence =
           ASN1Parser(data.contentBytes()).nextObject() as ASN1Sequence;
-      return ecKeyPairFromAsn1(sequence);
+      return ecKeyPairFromAsn1(sequence, algorithm: parameters);
     case 'sha1WithRSAEncryption':
   }
   throw UnimplementedError('Unknown algoritmh $algorithm');
@@ -179,7 +182,9 @@ String keyToString(Key key, [String prefix = '']) {
 ASN1BitString keyToAsn1(Key key) {
   var s = ASN1Sequence();
   if (key is RsaPublicKey) {
-    s..add(ASN1Integer(key.modulus))..add(ASN1Integer(key.exponent));
+    s
+      ..add(ASN1Integer(key.modulus))
+      ..add(ASN1Integer(key.exponent));
   }
   return ASN1BitString(s.encodedBytes);
 }
